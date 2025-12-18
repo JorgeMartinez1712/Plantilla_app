@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Modal, Platform, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import CountryPicker, { Country, CountryCode } from 'react-native-country-picker-modal';
 import { FONTS } from '../../constants/fonts';
+import { COLORS, GLOBAL_STYLES } from '../../constants/theme';
 import { useRegister } from "../../hooks/useRegister";
 import { AnimatedWavingHand } from "../common/AnimatedWavingHand";
 import ErrorNotification from "../common/ErrorNotification";
 import PasswordRequirements from "../common/PasswordRequirements";
 import SuccessNotification from "../common/SuccessNotification";
 import WarningNotification from "../common/WarningNotification";
-import { registerScreenStyles } from './RegisterScreen.styles';
 
 export default function RegisterForm() {
     const [email, setEmail] = useState("");
@@ -267,7 +267,7 @@ export default function RegisterForm() {
     };
 
     return (
-        <View style={[registerScreenStyles.form, { position: 'relative' }]}>
+        <View style={[GLOBAL_STYLES.formContainer, { marginTop: 40, paddingTop: 60, paddingBottom: Platform.OS === 'ios' ? 0 : 30, position: 'relative' }]}>
             <Image
                 source={require("../../assets/images/sin_bordes.png")}
                 style={{
@@ -282,29 +282,38 @@ export default function RegisterForm() {
                 resizeMode="contain"
             />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={registerScreenStyles.welcomeText}>
+                <Text style={[GLOBAL_STYLES.title, { marginTop: 40, flexDirection: 'row', alignItems: 'center' }]}>
                     Hola amigo
                 </Text>
                 <AnimatedWavingHand />
             </View>
-            <Text style={registerScreenStyles.signInPrompt}>Crea tu cuenta con nosotros</Text>
-            <Text style={registerScreenStyles.subtitle}>Con una cuenta, todo será</Text>
-            <Text style={registerScreenStyles.subtitle}>fácil y rápido</Text>
+            <Text style={[GLOBAL_STYLES.title, { color: "#363636", textAlign: 'center' }]}>Crea tu cuenta con nosotros</Text>
+            <Text style={GLOBAL_STYLES.subtitle}>Con una cuenta, todo será</Text>
+            <Text style={GLOBAL_STYLES.subtitle}>fácil y rápido</Text>
 
-            <View style={registerScreenStyles.tabContainer}>
-                <Pressable style={registerScreenStyles.inactiveTab} onPress={() => router.push("/(auth)")}>
-                    <Text style={registerScreenStyles.inactiveTabText}>Iniciar Sesión</Text>
+            <View style={GLOBAL_STYLES.tabContainer}>
+                <Pressable style={GLOBAL_STYLES.inactiveTab} onPress={() => router.push("/(auth)")}>
+                    <Text style={GLOBAL_STYLES.inactiveTabText}>Iniciar Sesión</Text>
                 </Pressable>
-                <Pressable style={registerScreenStyles.activeTab} onPress={() => { }}>
-                    <Text style={registerScreenStyles.activeTabText}>Registrarse</Text>
+                <Pressable style={GLOBAL_STYLES.activeTab} onPress={() => { }}>
+                    <Text style={GLOBAL_STYLES.activeTabText}>Registrarse</Text>
                 </Pressable>
             </View>
 
-            <Text style={registerScreenStyles.label}>Tipo y Número de Documento</Text>
-            <View style={registerScreenStyles.documentInputContainer}>
+            <Text style={GLOBAL_STYLES.label}>Tipo y Número de Documento</Text>
+            <View style={[GLOBAL_STYLES.inputContainer, { zIndex: 1000 }]}>
                 <TouchableOpacity
                     onPress={() => setShowDocumentTypeModal(true)}
-                    style={[registerScreenStyles.documentTypeDropdownInput, isDocumentVerified && registerScreenStyles.disabledInput]}
+                    style={[{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: 50,
+                        height: '100%',
+                        paddingLeft: 15,
+                        borderTopLeftRadius: 100,
+                        borderBottomLeftRadius: 100,
+                    }, isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                     disabled={isDocumentVerified}
                 >
                     <Text style={{ color: documentType ? "#000" : "#999" }}>
@@ -313,7 +322,19 @@ export default function RegisterForm() {
                     <MaterialIcons name="arrow-drop-down" size={24} color="#999" />
                 </TouchableOpacity>
                 <TextInput
-                    style={[registerScreenStyles.documentNumberInput, isDocumentVerified && registerScreenStyles.disabledInput]}
+                    style={[{
+                        flex: 1,
+                        height: '100%',
+                        paddingLeft: 10,
+                        paddingRight: 15,
+                        fontSize: 16,
+                        color: "#363636",
+                        borderLeftWidth: 1,
+                        borderColor: "#E0E0E0",
+                        borderTopRightRadius: 100,
+                        borderBottomRightRadius: 100,
+                        fontFamily: FONTS.regular,
+                    }, isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                     value={documentNumber}
                     onChangeText={setDocumentNumber}
                     keyboardType="numeric"
@@ -324,7 +345,7 @@ export default function RegisterForm() {
                 />
                 <TouchableOpacity
                     onPress={isDocumentVerified ? handleResetDocument : handleCheckDocument}
-                    style={isDocumentVerified ? [registerScreenStyles.checkButton, registerScreenStyles.resetButton] : registerScreenStyles.checkButton}
+                    style={isDocumentVerified ? [GLOBAL_STYLES.iconButton, { marginLeft: 10, backgroundColor: COLORS.error }] : [GLOBAL_STYLES.iconButton, { marginLeft: 10 }]}
                     disabled={loadingCheck}
                 >
                     {loadingCheck ? (
@@ -345,42 +366,42 @@ export default function RegisterForm() {
                 onRequestClose={() => setShowDocumentTypeModal(false)}
             >
                 <Pressable
-                    style={registerScreenStyles.datePickerModalOverlay}
+                    style={GLOBAL_STYLES.modalOverlay}
                     onPress={() => setShowDocumentTypeModal(false)}
                 >
                     <Pressable
-                        style={registerScreenStyles.datePickerModalContent}
+                        style={GLOBAL_STYLES.modalContent}
                         onPress={(e) => e.stopPropagation()}
                     >
-                        <Text style={registerScreenStyles.modalTitle}>Selecciona Tipo de Documento</Text>
+                        <Text style={GLOBAL_STYLES.modalTitle}>Selecciona Tipo de Documento</Text>
                         <FlatList
                             data={documentTypeItems}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
-                                    style={registerScreenStyles.documentTypeOption}
+                                    style={{ paddingVertical: 12, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: '#eee', width: '100%', alignItems: 'center' }}
                                     onPress={() => handleSelectDocumentType(item.value)}
                                 >
-                                    <Text style={registerScreenStyles.documentTypeOptionText}>
+                                    <Text style={{ fontSize: 16, color: '#363636', fontFamily: FONTS.regular }}>
                                         {item.label} ({item.code})
                                     </Text>
                                 </TouchableOpacity>
                             )}
-                            style={registerScreenStyles.documentTypeFlatList}
+                            style={{ width: '100%', maxHeight: 200 }}
                         />
                         <TouchableOpacity
                             onPress={() => setShowDocumentTypeModal(false)}
-                            style={[registerScreenStyles.datePickerButton, { marginTop: 20, backgroundColor: '#ccc' }]}
+                            style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 50, backgroundColor: '#ccc', marginTop: 20 }}
                         >
-                            <Text style={registerScreenStyles.datePickerButtonText}>Cerrar</Text>
+                            <Text style={{ color: '#fff', fontFamily: FONTS.bold, fontSize: 16 }}>Cerrar</Text>
                         </TouchableOpacity>
                     </Pressable>
                 </Pressable>
             </Modal>
 
-            <Text style={registerScreenStyles.label}>Nombre y Apellido</Text>
+            <Text style={GLOBAL_STYLES.label}>Nombre y Apellido</Text>
             <TextInput
-                style={[registerScreenStyles.input, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                style={[GLOBAL_STYLES.input, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                 value={fullName}
                 onChangeText={handleNameChange}
                 placeholder="Nombre y Apellido"
@@ -388,8 +409,8 @@ export default function RegisterForm() {
                 editable={isDocumentVerified}
             />
 
-            <Text style={registerScreenStyles.label}>Fecha de Nacimiento</Text>
-            <TouchableOpacity onPress={handleOpenDatePicker} style={[registerScreenStyles.input, !isDocumentVerified && registerScreenStyles.disabledInput]} disabled={!isDocumentVerified}>
+            <Text style={GLOBAL_STYLES.label}>Fecha de Nacimiento</Text>
+            <TouchableOpacity onPress={handleOpenDatePicker} style={[GLOBAL_STYLES.input, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]} disabled={!isDocumentVerified}>
                 <Text style={{ color: birthDate ? "#000" : "#999" }}>
                     {birthDate ? birthDate.toLocaleDateString() : "Selecciona tu fecha de nacimiento"}
                 </Text>
@@ -400,31 +421,31 @@ export default function RegisterForm() {
                 visible={showDatePicker}
                 onRequestClose={handleCancelDatePicker}
             >
-                <Pressable style={registerScreenStyles.datePickerModalOverlay} onPress={handleCancelDatePicker}>
-                    <Pressable style={registerScreenStyles.datePickerModalContent} onPress={(e) => e.stopPropagation()}>
-                        <Text style={registerScreenStyles.modalTitle}>Selecciona tu Fecha</Text>
+                <Pressable style={GLOBAL_STYLES.modalOverlay} onPress={handleCancelDatePicker}>
+                    <Pressable style={GLOBAL_STYLES.modalContent} onPress={(e) => e.stopPropagation()}>
+                        <Text style={GLOBAL_STYLES.modalTitle}>Selecciona tu Fecha</Text>
                         <DateTimePicker
                             value={tempBirthDate || new Date()}
                             mode="date"
                             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                             onChange={handleDateChange}
                             maximumDate={new Date()}
-                            textColor={Platform.OS === 'ios' ? '#65B65F' : undefined}
+                            textColor={Platform.OS === 'ios' ? COLORS.primary : undefined}
                         />
-                        <View style={registerScreenStyles.datePickerModalButtons}>
-                            <TouchableOpacity onPress={handleCancelDatePicker} style={[registerScreenStyles.datePickerButton, { backgroundColor: '#ccc' }]}>
-                                <Text style={registerScreenStyles.datePickerButtonText}>Cancelar</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginTop: 20 }}>
+                            <TouchableOpacity onPress={handleCancelDatePicker} style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 50, backgroundColor: '#ccc' }}>
+                                <Text style={{ color: '#fff', fontFamily: FONTS.bold, fontSize: 16 }}>Cancelar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={handleConfirmDatePicker} style={registerScreenStyles.datePickerButton}>
-                                <Text style={registerScreenStyles.datePickerButtonText}>Confirmar</Text>
+                            <TouchableOpacity onPress={handleConfirmDatePicker} style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 50, backgroundColor: COLORS.primary }}>
+                                <Text style={{ color: '#fff', fontFamily: FONTS.bold, fontSize: 16 }}>Confirmar</Text>
                             </TouchableOpacity>
                         </View>
                     </Pressable>
                 </Pressable>
             </Modal>
-            <Text style={registerScreenStyles.label}>Dirección</Text>
+            <Text style={GLOBAL_STYLES.label}>Dirección</Text>
             <TextInput
-                style={[registerScreenStyles.input, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                style={[GLOBAL_STYLES.input, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                 value={address}
                 onChangeText={setAddress}
                 placeholder="Tu dirección"
@@ -432,9 +453,9 @@ export default function RegisterForm() {
                 editable={isDocumentVerified}
             />
 
-            <Text style={registerScreenStyles.label}>Correo Electrónico</Text>
+            <Text style={GLOBAL_STYLES.label}>Correo Electrónico</Text>
             <TextInput
-                style={[registerScreenStyles.input, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                style={[GLOBAL_STYLES.input, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -444,9 +465,9 @@ export default function RegisterForm() {
                 editable={isDocumentVerified}
             />
 
-            <Text style={registerScreenStyles.label}>Número de Teléfono</Text>
-            <View style={registerScreenStyles.phoneInputContainer}>
-                <View style={[registerScreenStyles.countryPickerButton, !isDocumentVerified && registerScreenStyles.disabledInput]} pointerEvents={!isDocumentVerified ? 'none' : 'auto'}>
+            <Text style={GLOBAL_STYLES.label}>Número de Teléfono</Text>
+            <View style={GLOBAL_STYLES.inputContainer}>
+                <View style={[{ paddingRight: 15, height: '100%', justifyContent: 'center', borderRightWidth: 1, borderRightColor: "#E0E0E0" }, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]} pointerEvents={!isDocumentVerified ? 'none' : 'auto'}>
                     <CountryPicker
                         withFlag
                         withCallingCode
@@ -458,7 +479,7 @@ export default function RegisterForm() {
                         onClose={() => setWithCountryPickerVisible(false)}
                         renderFlagButton={() => (
                             <TouchableOpacity onPress={() => setWithCountryPickerVisible(true)} disabled={!isDocumentVerified}>
-                                <Text style={registerScreenStyles.countryCodeText}>
+                                <Text style={{ fontSize: 16, color: "#363636", paddingHorizontal: 5, fontFamily: FONTS.regular }}>
                                     {country ? `+${country.callingCode[0]}` : '+58'}
                                 </Text>
                             </TouchableOpacity>
@@ -466,7 +487,7 @@ export default function RegisterForm() {
                     />
                 </View>
                 <TextInput
-                    style={[registerScreenStyles.phoneTextInput, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                    style={[{ flex: 1, fontSize: 16, color: "#363636", paddingLeft: 10, paddingRight: 15, fontFamily: FONTS.regular }, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                     value={phoneNumber}
                     onChangeText={setPhoneNumber}
                     keyboardType="numeric"
@@ -477,10 +498,10 @@ export default function RegisterForm() {
                 />
             </View>
 
-            <Text style={registerScreenStyles.label}>Contraseña</Text>
-            <View style={registerScreenStyles.passwordInputContainer}>
+            <Text style={GLOBAL_STYLES.label}>Contraseña</Text>
+            <View style={GLOBAL_STYLES.inputContainer}>
                 <TextInput
-                    style={[registerScreenStyles.passwordInput, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                    style={[{ flex: 1, fontSize: 16, color: "#363636", fontFamily: FONTS.regular }, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={!showPassword}
@@ -490,15 +511,15 @@ export default function RegisterForm() {
                     autoComplete="new-password"
                     editable={isDocumentVerified}
                 />
-                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={registerScreenStyles.eyeIcon} disabled={!isDocumentVerified}>
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ paddingLeft: 10 }} disabled={!isDocumentVerified}>
                     <MaterialIcons name={showPassword ? "visibility" : "visibility-off"} size={24} color="#999" />
                 </TouchableOpacity>
             </View>
 
-            <Text style={registerScreenStyles.label}>Repetir Contraseña</Text>
-            <View style={registerScreenStyles.passwordInputContainer}>
+            <Text style={GLOBAL_STYLES.label}>Repetir Contraseña</Text>
+            <View style={GLOBAL_STYLES.inputContainer}>
                 <TextInput
-                    style={[registerScreenStyles.passwordInput, !isDocumentVerified && registerScreenStyles.disabledInput]}
+                    style={[{ flex: 1, fontSize: 16, color: "#363636", fontFamily: FONTS.regular }, !isDocumentVerified && GLOBAL_STYLES.inputDisabled]}
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                     secureTextEntry={!showConfirmPassword}
@@ -508,33 +529,33 @@ export default function RegisterForm() {
                     autoComplete="new-password"
                     editable={isDocumentVerified}
                 />
-                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={registerScreenStyles.eyeIcon} disabled={!isDocumentVerified}>
+                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={{ paddingLeft: 10 }} disabled={!isDocumentVerified}>
                     <MaterialIcons name={showConfirmPassword ? "visibility" : "visibility-off"} size={24} color="#999" />
                 </TouchableOpacity>
             </View>
 
             <PasswordRequirements validations={passwordValidations} />
 
-            <TouchableOpacity style={registerScreenStyles.registerButton} onPress={handleRegister} disabled={loading || !isDocumentVerified}>
+            <TouchableOpacity style={GLOBAL_STYLES.primaryButton} onPress={handleRegister} disabled={loading || !isDocumentVerified}>
                 {loading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text style={registerScreenStyles.registerButtonText}>Registrarse</Text>
+                    <Text style={GLOBAL_STYLES.primaryButtonText}>Registrarse</Text>
                 )}
             </TouchableOpacity>
 
-            <View style={registerScreenStyles.termsContainer}>
+            <View style={[GLOBAL_STYLES.row, { alignSelf: "flex-start", marginBottom: 30 }]}>
                 <TouchableOpacity onPress={() => setTermsAccepted(!termsAccepted)} disabled={!isDocumentVerified}>
-                    <View style={[registerScreenStyles.checkbox, !isDocumentVerified && { borderColor: '#ccc' }]}>
-                        {termsAccepted && <View style={registerScreenStyles.checkedCheckbox} />}
+                    <View style={[GLOBAL_STYLES.checkbox, !isDocumentVerified && { borderColor: '#ccc' }]}>
+                        {termsAccepted && <View style={GLOBAL_STYLES.checkedCheckbox} />}
                     </View>
                 </TouchableOpacity>
-                <Text style={[registerScreenStyles.termsText, !isDocumentVerified && { color: '#ccc' }]}>
-                    Acepto los <Text style={registerScreenStyles.boldText}>Términos y Condiciones.</Text>
+                <Text style={[{ fontSize: 14, color: "#555", fontFamily: FONTS.regular }, !isDocumentVerified && { color: '#ccc' }]}>
+                    Acepto los <Text style={{ fontFamily: FONTS.bold }}>Términos y Condiciones.</Text>
                 </Text>
             </View>
             <TouchableOpacity onPress={() => router.push("/(auth)")}>
-                <Text style={registerScreenStyles.registerLink}>¿Ya tienes una cuenta? <Text style={{ fontFamily: FONTS.bold, color: "#65B65F" }}>Iniciar sesión</Text></Text>
+                <Text style={[GLOBAL_STYLES.subtitle, { fontSize: 14, color: "#888", marginTop: 16, marginBottom: 36 }]}>¿Ya tienes una cuenta? <Text style={{ fontFamily: FONTS.bold, color: COLORS.primary }}>Iniciar sesión</Text></Text>
             </TouchableOpacity>
 
             <WarningNotification

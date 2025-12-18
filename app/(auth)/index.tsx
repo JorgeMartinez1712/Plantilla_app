@@ -1,22 +1,22 @@
 import { Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView } from "react-native";
 import LoginForm from "../../components/login/LoginForm";
-import { loginScreenStyles } from '../../components/login/LoginScreen.styles';
+import { GLOBAL_STYLES, SIZES } from "../../constants/theme";
 
 export default function LoginScreen() {
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1, width: '100%', backgroundColor: "#fff" }}
+            style={GLOBAL_STYLES.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
             <ScrollView
                 style={{ flex: 1, width: '100%' }}
-                contentContainerStyle={loginScreenStyles.scrollViewContent}
+                contentContainerStyle={[GLOBAL_STYLES.scrollContent, { alignItems: 'center', paddingTop: 60, paddingBottom: 20 }]}
                 keyboardShouldPersistTaps="handled"
             >
-                <Pressable onPress={Keyboard.dismiss} style={loginScreenStyles.pressableContainer}>
+                <Pressable onPress={Keyboard.dismiss} style={{ flexGrow: 1, width: '100%', alignItems: 'center' }}>
                     <Image
                         source={require("../../assets/images/sin_bordes.png")}
-                        style={loginScreenStyles.logo}
+                        style={{ width: SIZES.width * 1, height: SIZES.width * 0.4, marginTop: 50 }}
                         resizeMode="contain"
                     />
                     <LoginForm />

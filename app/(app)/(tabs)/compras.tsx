@@ -3,6 +3,7 @@ import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "
 import FinanceSummary from '../../../components/purchases/FinanceSummary';
 import PurchaseCard from '../../../components/purchases/PurchaseCard';
 import SearchBarWithBasket from '../../../components/purchases/SearchBarWithBasket';
+import { COLORS, FONTS, GLOBAL_STYLES } from '../../../constants/theme';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useSales } from '../../../hooks/useSales';
 
@@ -41,8 +42,8 @@ export default function PurchasesScreen() {
   const currentMonthTitle = getMonthName(new Date());
 
   return (
-    <View style={styles.fullContainer}>
-      <ScrollView contentContainerStyle={styles.contentScroll}>
+    <View style={GLOBAL_STYLES.fullContainer}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <SearchBarWithBasket onSearch={handleSearch} onBasketPress={handleBasketPress} />
         <FinanceSummary
           monthTitle={currentMonthTitle}
@@ -51,10 +52,10 @@ export default function PurchasesScreen() {
           financialMetrics={financialMetrics}
           motivationText={'🎉 ¡Sigue así! ¡Lo estás haciendo genial!'}
         />
-        {loading && <Text style={styles.infoText}>Cargando compras...</Text>}
-        {error && <Text style={styles.errorText}>Error: {error}</Text>}
+        {loading && <Text style={GLOBAL_STYLES.infoText}>Cargando compras...</Text>}
+        {error && <Text style={GLOBAL_STYLES.errorText}>Error: {error}</Text>}
         {!loading && !error && sales.length === 0 ? (
-          <Text style={styles.infoText}>No hay compras para mostrar.</Text>
+          <Text style={GLOBAL_STYLES.infoText}>No hay compras para mostrar.</Text>
         ) : (
           <FlatList
             data={sales}
@@ -69,7 +70,7 @@ export default function PurchasesScreen() {
               />
             )}
             keyExtractor={item => item.id}
-            contentContainerStyle={styles.purchasesList}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 0 }}
             scrollEnabled={false}
           />
         )}
@@ -86,18 +87,6 @@ export default function PurchasesScreen() {
 }
 
 const styles = StyleSheet.create({
-  fullContainer: {
-    flex: 1,
-    backgroundColor: '#F6F9FF',
-  },
-  contentScroll: {
-    paddingBottom: 20,
-  },
-  purchasesList: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 0,
-  },
   totalAndPaidContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -119,7 +108,7 @@ const styles = StyleSheet.create({
   totalText: {
     fontSize: 18,
     color: '#363636',
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.regular,
   },
   totalAmount: {
     fontSize: 22,
@@ -128,32 +117,18 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     marginLeft: 10,
-    fontFamily: '5000Medium',
+    fontFamily: '5000Medium', // This font seems specific, maybe keep or replace with FONTS.medium if available
   },
   paidButtonWrapper: {
-    backgroundColor: '#65B65F',
+    backgroundColor: COLORS.primary,
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 30,
   },
   paidButtonText: {
-    color: '#fff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'Poppins_400Regular',
-  },
-  infoText: {
-    textAlign: 'center',
-    marginTop: 20,
-    fontSize: 16,
-    color: '#666',
-    fontFamily: 'Poppins_400Regular',
-  },
-  errorText: {
-    textAlign: 'center',
-    marginTop: 20,
-    fontSize: 16,
-    color: '#D8000C',
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: FONTS.regular,
   },
 });

@@ -1,10 +1,11 @@
 import * as Sharing from 'expo-sharing';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import FinancingDetails from '../../../components/financier/FinancingDetails';
 import ProductSelection from '../../../components/financier/ProductSelection';
 import SummaryCard from '../../../components/financier/SummaryCard';
+import { COLORS, FONTS, GLOBAL_STYLES } from '../../../constants/theme';
 import { CalculationResult, FinancingPlan, Product, useFinancier } from '../../../hooks/useCalculator';
 
 export default function FinanciamientoScreen() {
@@ -105,33 +106,57 @@ export default function FinanciamientoScreen() {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4CAF50" />
-        <Text style={{ fontFamily: 'Poppins_400Regular' }}>Cargando datos...</Text>
+      <View style={GLOBAL_STYLES.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+        <Text style={{ fontFamily: FONTS.regular }}>Cargando datos...</Text>
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
+      <View style={GLOBAL_STYLES.loadingContainer}>
+        <Text style={GLOBAL_STYLES.errorText}>Error: {error}</Text>
       </View>
     );
   }
 
   return (
     <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.scrollContentContainer}
+      style={GLOBAL_STYLES.fullContainer}
+      contentContainerStyle={GLOBAL_STYLES.scrollContent}
     >
-      <View style={styles.mainContentWrapper}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Financiamiento</Text>
-          <Text style={styles.subtitle}>Elige tu producto, selecciona cuotas y conoce tu plan de pago al instante.</Text>
+      <View style={{
+        backgroundColor: COLORS.white,
+        borderRadius: 20,
+        marginHorizontal: 15,
+        marginVertical: 20,
+      }}>
+        <View style={{
+          padding: 20,
+          paddingTop: 30,
+          marginBottom: 5,
+        }}>
+          <Text style={{
+            fontSize: 24,
+            fontWeight: 'bold',
+            paddingHorizontal: 5,
+            marginBottom: 5,
+            color: '#363636',
+            fontFamily: FONTS.bold,
+          }}>Financiamiento</Text>
+          <Text style={{
+            fontSize: 16,
+            paddingHorizontal: 5,
+            color: '#666',
+            fontFamily: FONTS.regular,
+          }}>Elige tu producto, selecciona cuotas y conoce tu plan de pago al instante.</Text>
         </View>
 
-        <View style={styles.content}>
+        <View style={{
+          paddingHorizontal: 5,
+          paddingBottom: 20,
+        }}>
           <ProductSelection
             products={products}
             selectedProduct={selectedProduct}
@@ -155,8 +180,22 @@ export default function FinanciamientoScreen() {
             <>
               <ViewShot ref={summaryViewRef} options={{ format: 'png', quality: 0.9 }}>
                 {calculationResult.financingLimitExceeded ? (
-                  <View style={styles.warningCard}>
-                    <Text style={styles.warningText}>
+                  <View style={{
+                    backgroundColor: '#FFF3CD',
+                    borderRadius: 10,
+                    padding: 15,
+                    marginBottom: 10,
+                    borderWidth: 1,
+                    borderColor: '#FFE082',
+                    alignItems: 'center',
+                  }}>
+                    <Text style={{
+                      color: '#E65100',
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      fontFamily: FONTS.bold,
+                    }}>
                       El monto a financiar (${(parseFloat(selectedProduct.base_price) - initialPayment).toFixed(2)}) excede el límite de este plan (${calculationResult.maxFinancingAllowed.toFixed(2)}).
                       Aumenta tu pago inicial o selecciona otro plan.
                     </Text>
@@ -178,13 +217,39 @@ export default function FinanciamientoScreen() {
             </>
           )}
           {!selectedProduct && (
-            <View style={styles.infoCard}>
-              <Text style={styles.infoText}>Selecciona un producto para ver las opciones de financiamiento.</Text>
+            <View style={{
+              backgroundColor: '#E3F2FD',
+              borderRadius: 10,
+              padding: 15,
+              marginBottom: 5,
+              borderWidth: 1,
+              borderColor: '#90CAF9',
+              alignItems: 'center',
+            }}>
+              <Text style={{
+                color: '#2196F3',
+                fontSize: 15,
+                textAlign: 'center',
+                fontFamily: FONTS.regular,
+              }}>Selecciona un producto para ver las opciones de financiamiento.</Text>
             </View>
           )}
           {selectedProduct && !selectedFinancingPlan && (
-            <View style={styles.infoCard}>
-              <Text style={styles.infoText}>Selecciona un plan de financiamiento.</Text>
+            <View style={{
+              backgroundColor: '#E3F2FD',
+              borderRadius: 10,
+              padding: 15,
+              marginBottom: 5,
+              borderWidth: 1,
+              borderColor: '#90CAF9',
+              alignItems: 'center',
+            }}>
+              <Text style={{
+                color: '#2196F3',
+                fontSize: 15,
+                textAlign: 'center',
+                fontFamily: FONTS.regular,
+              }}>Selecciona un plan de financiamiento.</Text>
             </View>
           )}
 
@@ -193,86 +258,3 @@ export default function FinanciamientoScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F6F9FF',
-  },
-  scrollContentContainer: {
-    paddingBottom: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc',
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 20,
-    fontSize: 16,
-    textAlign: 'center',
-    fontFamily: 'Poppins_400Regular',
-  },
-  mainContentWrapper: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    marginHorizontal: 15,
-    marginVertical: 20,
-  },
-  header: {
-    padding: 20,
-    paddingTop: 30,
-    marginBottom: 5,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    paddingHorizontal: 5,
-    marginBottom: 5,
-    color: '#363636',
-    fontFamily: 'Poppins_700Bold',
-  },
-  subtitle: {
-    fontSize: 16,
-    paddingHorizontal: 5,
-    color: '#666',
-    fontFamily: 'Poppins_400Regular',
-  },
-  content: {
-    paddingHorizontal: 5,
-    paddingBottom: 20,
-  },
-  warningCard: {
-    backgroundColor: '#FFF3CD',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#FFE082',
-    alignItems: 'center',
-  },
-  warningText: {
-    color: '#E65100',
-    fontSize: 15,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'Poppins_700Bold',
-  },
-  infoCard: {
-    backgroundColor: '#E3F2FD',
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 5,
-    borderWidth: 1,
-    borderColor: '#90CAF9',
-    alignItems: 'center',
-  },
-  infoText: {
-    color: '#2196F3',
-    fontSize: 15,
-    textAlign: 'center',
-    fontFamily: 'Poppins_400Regular',
-  },
-});

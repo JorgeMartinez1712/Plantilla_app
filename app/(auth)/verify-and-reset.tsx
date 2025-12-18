@@ -3,6 +3,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Image, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import PasswordRequirements from "../../components/common/PasswordRequirements";
+import { COLORS } from "../../constants/theme";
 import { useLogin } from "../../hooks/useLogin";
 
 export default function VerifyAndResetPasswordScreen() {
@@ -209,29 +210,29 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: "#E0F7FA",
+        backgroundColor: COLORS.iconBackground,
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 10,
         borderWidth: 2,
-        borderColor: '#4CAF50',
+        borderColor: COLORS.primary,
     },
     confirmationTitle: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#65B65F",
+        color: COLORS.primary,
             fontFamily: 'Poppins_700Bold',
     },
     recoverTitle: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#363636",
+        color: COLORS.text,
         marginTop: 5,
             fontFamily: 'Poppins_700Bold',
     },
     description: {
         fontSize: 14,
-        color: "#666",
+        color: COLORS.textSecondary,
         textAlign: "center",
         marginTop: 10,
         maxWidth: 280,
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: "#cdf8c2ff",
+        backgroundColor: COLORS.lightPrimary,
         borderRadius: 100,
         paddingHorizontal: 12,
         marginBottom: 10,
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#363636',
+        color: COLORS.text,
         height: '100%',
         paddingHorizontal: 10,
             fontFamily: 'Poppins_400Regular',
@@ -260,11 +261,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 24,
         paddingBottom: 30,
-        backgroundColor: '#F6F9FF',
+        backgroundColor: COLORS.backgroundSecondary,
         marginBottom: 20,
     },
     confirmButton: {
-        backgroundColor: '#65B65F',
+        backgroundColor: COLORS.primary,
         borderRadius: 50,
         paddingVertical: 15,
         paddingHorizontal: 30,
@@ -274,16 +275,16 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     confirmButtonDisabled: {
-        backgroundColor: '#81c78dff',
+        backgroundColor: '#81c78dff', // This seems like a specific disabled color, maybe keep or add to constants
     },
     confirmButtonText: {
-        color: '#fff',
+        color: COLORS.white,
         fontSize: 14,
         fontWeight: 'bold',
             fontFamily: 'Poppins_700Bold',
     },
     backButton: {
-        backgroundColor: '#D1E7DD',
+        backgroundColor: '#D1E7DD', // Another specific color
         borderRadius: 50,
         paddingVertical: 15,
         paddingHorizontal: 30,
@@ -295,7 +296,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#BCE5D1',
     },
     backButtonText: {
-        color: '#4CAF50',
+        color: COLORS.primary,
         fontSize: 14,
         fontWeight: 'bold',
             fontFamily: 'Poppins_700Bold',

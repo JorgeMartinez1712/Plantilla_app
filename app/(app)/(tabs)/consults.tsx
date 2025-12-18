@@ -1,30 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { FONTS, GLOBAL_STYLES } from '../../../constants/theme';
 
 export default function ConsultsScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Consultas</Text>
-      <Text style={styles.subtitle}>¿Necesitas ayuda? Haz tus preguntas aquí.</Text>
+    <View style={GLOBAL_STYLES.loadingContainer}>
+      <Text style={{ fontSize: 24, fontFamily: FONTS.bold, marginBottom: 10 }}>Consultas</Text>
+      <Text style={GLOBAL_STYLES.infoText}>¿Necesitas ayuda? Haz tus preguntas aquí.</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F6F9FF',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    fontFamily: 'Poppins_700Bold',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    fontFamily: 'Poppins_400Regular',
-  },
-});

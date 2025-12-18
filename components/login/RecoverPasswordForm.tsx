@@ -13,6 +13,7 @@ import {
     View,
 } from "react-native";
 import { FONTS } from '../../constants/fonts';
+import { COLORS } from '../../constants/theme';
 
 interface RecoverPasswordFormProps {
   onSendCode: (email: string) => void;
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 24,
     paddingTop: 50,
-    backgroundColor: '#F6F9FF',
+    backgroundColor: COLORS.backgroundSecondary,
   },
   logo: {
     width: 347,
@@ -116,32 +117,32 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#E0F7FA",
+    backgroundColor: COLORS.iconBackground,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
     borderWidth: 2,
-    borderColor: '#4CAF50',
+    borderColor: COLORS.primary,
   },
   exclamationIcon: {
     fontSize: 40,
     fontFamily: FONTS.bold,
-    color: "#65B65F",
+    color: COLORS.primary,
   },
   confirmationTitle: {
     fontSize: 18,
     fontFamily: FONTS.bold,
-    color: "#65B65F",
+    color: COLORS.primary,
   },
   recoverTitle: {
     fontSize: 22,
     fontFamily: FONTS.bold,
-    color: "#363636",
+    color: COLORS.text,
     marginTop: 5,
   },
   description: {
     fontSize: 14,
-    color: "#666",
+    color: COLORS.textSecondary,
     textAlign: "center",
     marginTop: 10,
     maxWidth: 280,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: "100%",
     height: 50,
-    backgroundColor: "#cdf8c2ff"
+    backgroundColor: COLORS.lightPrimary
   },
   input: {
     flex: 1,
@@ -167,18 +168,18 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#65B65F",
+    backgroundColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
   },
   checkIcon: {
-    color: "#fff",
+    color: COLORS.white,
     fontSize: 16,
     fontFamily: FONTS.bold,
   },
   backButton: {
-    backgroundColor: '#65B65F',
+    backgroundColor: COLORS.primary,
     borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 30,
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#81c78dff',
   },
   backButtonText: {
-    color: '#fff',
+    color: COLORS.white,
     fontSize: 14,
     fontFamily: FONTS.bold,
   },

@@ -3,10 +3,10 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FONTS } from '../../constants/fonts';
+import { COLORS, GLOBAL_STYLES } from '../../constants/theme';
 import { useLogin } from "../../hooks/useLogin";
 import { AnimatedWavingHand } from "../common/AnimatedWavingHand";
 import WarningNotification from "../common/WarningNotification";
-import { loginScreenStyles } from './LoginScreen.styles';
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -43,27 +43,27 @@ export default function LoginForm() {
     };
 
     return (
-        <View style={loginScreenStyles.form}>
+        <View style={GLOBAL_STYLES.formContainer}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={loginScreenStyles.welcomeText}>Bienvenido de vuelta</Text>
+                <Text style={[GLOBAL_STYLES.title, { marginTop: 5, flexDirection: 'row', alignItems: 'center' }]}>Bienvenido de vuelta</Text>
                 <AnimatedWavingHand />
             </View>
-            <Text style={loginScreenStyles.signInPrompt}>Inicia Sesión para continuar.</Text>
-            <Text style={loginScreenStyles.offerText}>APROVECHA NUESTRAS CUOTAS QUINCENALES e inicial de 40%</Text>
-            <View style={loginScreenStyles.tabContainer}>
-                <Pressable style={loginScreenStyles.activeTab}>
-                    <Text style={loginScreenStyles.activeTabText}>Iniciar Sesión</Text>
+            <Text style={[GLOBAL_STYLES.title, { color: "#363636", textAlign: 'center', marginBottom: 20 }]}>Inicia Sesión para continuar.</Text>
+            <Text style={[GLOBAL_STYLES.subtitle, { marginBottom: 30 }]}>APROVECHA NUESTRAS CUOTAS QUINCENALES e inicial de 40%</Text>
+            <View style={[GLOBAL_STYLES.tabContainer, { marginBottom: 20 }]}>
+                <Pressable style={GLOBAL_STYLES.activeTab}>
+                    <Text style={GLOBAL_STYLES.activeTabText}>Iniciar Sesión</Text>
                 </Pressable>
                 <Pressable
-                    style={loginScreenStyles.inactiveTab}
+                    style={GLOBAL_STYLES.inactiveTab}
                     onPress={() => router.push("/register")}
                 >
-                    <Text style={loginScreenStyles.inactiveTabText}>Registrarse</Text>
+                    <Text style={GLOBAL_STYLES.inactiveTabText}>Registrarse</Text>
                 </Pressable>
             </View>
-            <Text style={loginScreenStyles.label}>Correo</Text>
+            <Text style={[GLOBAL_STYLES.label, { marginTop: 0 }]}>Correo</Text>
             <TextInput
-                style={loginScreenStyles.input}
+                style={GLOBAL_STYLES.input}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -72,10 +72,10 @@ export default function LoginForm() {
                 placeholderTextColor="#999"
                 editable={!loginLoading}
             />
-            <Text style={loginScreenStyles.label}>Contraseña</Text>
-            <View style={loginScreenStyles.passwordInputContainer}>
+            <Text style={GLOBAL_STYLES.label}>Contraseña</Text>
+            <View style={[GLOBAL_STYLES.inputContainer, { marginBottom: 20 }]}>
                 <TextInput
-                    style={loginScreenStyles.passwordInput}
+                    style={GLOBAL_STYLES.inputFlex}
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={!showPassword}
@@ -85,7 +85,7 @@ export default function LoginForm() {
                 />
                 <TouchableOpacity
                     onPress={() => setShowPassword(!showPassword)}
-                    style={loginScreenStyles.eyeIcon}
+                    style={{ paddingLeft: 10 }}
                     disabled={loginLoading}
                 >
                     <MaterialIcons
@@ -97,13 +97,13 @@ export default function LoginForm() {
             </View>
             <TouchableOpacity
                 style={[
-                    loginScreenStyles.loginButton,
-                    loginLoading && { backgroundColor: '#65B65F' }
+                    GLOBAL_STYLES.primaryButton,
+                    loginLoading && { backgroundColor: COLORS.primary }
                 ]}
                 onPress={handleLogin}
                 disabled={loginLoading}
             >
-                <Text style={loginScreenStyles.loginButtonText}>
+                <Text style={GLOBAL_STYLES.primaryButtonText}>
                     {loginLoading ? "Verificando..." : "Iniciar Sesión"}
                 </Text>
             </TouchableOpacity>
@@ -111,7 +111,7 @@ export default function LoginForm() {
                 onPress={() => router.push("/SendVerificationCode")}
                 disabled={loginLoading}
             >
-                <Text style={{ color: "#65B65F", fontFamily: FONTS.bold }}>
+                <Text style={{ color: COLORS.primary, fontFamily: FONTS.bold }}>
                     ¿Olvidaste tu contraseña?
                 </Text>
             </TouchableOpacity>
@@ -119,9 +119,9 @@ export default function LoginForm() {
                 onPress={() => router.push("/register")}
                 disabled={loginLoading}
             >
-                <Text style={loginScreenStyles.registerLink}>
+                <Text style={[GLOBAL_STYLES.subtitle, { fontSize: 14, color: "#888", marginTop: 20 }]}>
                     ¿Aún no tienes una cuenta?{" "}
-                    <Text style={{ fontFamily: FONTS.bold, color: "#65B65F" }}>
+                    <Text style={{ fontFamily: FONTS.bold, color: COLORS.primary }}>
                         Regístrarme
                     </Text>
                 </Text>

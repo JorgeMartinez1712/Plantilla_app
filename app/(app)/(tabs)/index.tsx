@@ -6,6 +6,7 @@ import FinancingSection from '../../../components/home/FinancingSection';
 import Header from '../../../components/home/Header';
 import ProductList from '../../../components/home/ProductList';
 import { FilterButton, SearchBar } from '../../../components/home/SearchBar';
+import { COLORS, GLOBAL_STYLES } from '../../../constants/theme';
 import { useAuthContext } from '../../../context/AuthContext';
 import { useHome } from '../../../hooks/useHome';
 import { usePushNotifications } from '../../../hooks/usePushNotifications';
@@ -48,16 +49,16 @@ export default function HomeScreen() {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#65B65F" />
+      <View style={GLOBAL_STYLES.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Ocurrió un error al cargar la información: {error}</Text>
+      <View style={GLOBAL_STYLES.errorContainer}>
+        <Text style={GLOBAL_STYLES.errorText}>Ocurrió un error al cargar la información: {error}</Text>
       </View>
     );
   }
@@ -67,12 +68,12 @@ export default function HomeScreen() {
     : null;
 
   return (
-    <View style={styles.fullContainer}>
+    <View style={GLOBAL_STYLES.fullContainer}>
       <Header customerLevel={customerLevel} />
       <ScrollView 
-        contentContainerStyle={styles.contentScroll}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#65B65F']} tintColor="#65B65F" />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.primary]} tintColor={COLORS.primary} />
         }
       >
         <View style={styles.searchAndFilterContainer}>
@@ -93,14 +94,6 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  fullContainer: {
-    flex: 1,
-    backgroundColor: '#F6F9FF',
-  },
-  contentScroll: {
-    flexGrow: 1,
-    paddingBottom: 20,
-  },
   searchAndFilterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -115,23 +108,5 @@ const styles = StyleSheet.create({
   filterButtonWrapper: {
     flex: 0.2,
     alignItems: 'flex-end',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F6F9FF',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F6F9FF',
-    padding: 20,
-  },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-    fontFamily: 'Poppins_400Regular',
   },
 });
