@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343942499147",
+    "project_id": "financiados-d7287",
+    "storage_bucket": "financiados-d7287.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343942499147:android:4e0f93ab227e2083dc76ce",
+        "android_client_info": {
+          "package_name": "com.bitamericacorp.financiados"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeH5cLvt9AKZwx-tosU6kbXMApOUKAaBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,79 @@
+{
+  "expo": {
+    "name": "Financia2",
+    "slug": "app_movil",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo-app.png",
+    "scheme": "appmovil",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bitamericacorp.financiados",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo-app.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.bitamericacorp.financiados",
+      "googleServicesFile": "./google-services.json"
+    },
+    "splash": {
+      "image": "./assets/images/sin_bordes.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/logo-app.png"
+    },
+    "notification": {
+      "icon": "./assets/images/logo_blanco.png",
+      "color": "#1c3d52"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "La aplicación necesita acceso a tus fotos para actualizar tu perfil.",
+          "cameraPermission": "La aplicación necesita acceso a tu cámara para actualizar tu perfil."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/sin_bordes.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "buildReactNativeFromSource": true
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "1b19858f-c335-452e-ad30-da0a919b55c5"
+      }
+    }
+  }
+}
